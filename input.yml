@@ -1,0 +1,16 @@
+region :
+    - Bremen, Germany
+    - Hamburg, Deutschland
+tags :
+    1 :
+        key : power 
+        value : generator
+        filter : 
+            key : "generator:source"
+            value :
+                - wind
+        decay : 10
+geo :
+    crs : 32632
+    buffer : 5000
+    resolution : 100
