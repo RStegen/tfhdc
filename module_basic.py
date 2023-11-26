@@ -27,16 +27,19 @@ class Module():
         #self.rasterfiles[self.name + '_start'] = xr.DataArray(self.cmd['start'], 
         #                                                      self.rasterfiles.mask.coords)
         
+        
     def calc_distance_decay(self):
-        for _,i in self.features.iterrows():
-            xrd = sqrt((self.rasterfiles.x - i.x)**2 + (self.rasterfiles.y -i.y )**2)
-            
-            self.rasterfiles[self.name] = self.rasterfiles[self.name] + self.rasterfiles[self.name + '_start'] * (1/2) ** (xrd / (self.cmd['decay'] * 1000))
-            
+
+        xrd = sqrt((-self.features.y + self.rasterfiles.y)**2 + (-self.features.x + self.rasterfiles.x)**2)
+        
+        res = self.rasterfiles[self.name + '_start'] * (1/2) ** (xrd / (self.cmd['decay']*1000))
+        
+        self.rasterfiles[self.name] = res.sum('index')
+        
         
     def process(self):
+        #return self.rasterfiles, self.features
         self.calc_distance_decay()
         
         return self.rasterfiles
         
-        #return self.rasterfiles, self.features
