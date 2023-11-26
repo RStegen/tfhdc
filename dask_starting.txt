@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov 26 14:23:45 2023
+
+@author: Anwender
+"""
+
+# prompt 1
+conda activate DemoProjekt
+dask scheduler
+
+#copy tcp
+
+# prompt 2
+conda activate DemoProjekt
+dask worker <tcp> --nworkers <n>  # max 12 auf gpc
