@@ -43,5 +43,5 @@ class Module():
         #return self.rasterfiles, self.features
         self.calc_distance_decay()
         
-        return self.rasterfiles, self.features
+        return self.rasterfiles
         

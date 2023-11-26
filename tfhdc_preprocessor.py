@@ -76,6 +76,7 @@ class Preprocessor(dict):
         self['files']['cmd'] = self['files'].get('cmd', 'cmd.json')
         self['files']['regions_raster'] = self['files'].get('regions_raster', 'regions_raster.tif')
         self['files']['rasterfiles'] = self['files'].get('rasterfiles', 'rasterfiles.nc')
+        self['files']['output_file'] = self['files'].get('output_file', 'tfhdc_output.nc')
 
     def prepare_geo_settings(self):
         """

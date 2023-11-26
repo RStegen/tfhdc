@@ -33,4 +33,10 @@ def run(infile):
     print('starting_module_run')
     result = module.process()
     
+    print('starting to write output')
+    
+    result.compute().to_netcdf(Path(p['files']['outpath']) / p['files']['output_file'])
+    
     return result
+
+    
