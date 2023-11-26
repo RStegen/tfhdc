@@ -4,14 +4,19 @@ region :
 #    - Niedersachsen, Germany
 tags :
     1 :
+        name : wind_basic
         key : power 
         value : generator
         filter : 
             key : "generator:source"
             value :
                 - wind
-        decay : 100
+        start : 1000 # starting intensity
+        decay : 2 # intensity loss/km
 geo :
     crs : 32632
-    buffer : 5000
+    buffer : 50000
     resolution : 100
+chunks :
+    x : 10000
+    y : 10000

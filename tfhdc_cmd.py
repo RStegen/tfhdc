@@ -89,9 +89,9 @@ class Cmd(dict):
             file = self['files'].get(i)
             
             if '.json' in file:
-                data[i] = gpd.read_file(self.opath / file)
+                data[i] = gpd.read_file(self.opath / file)[['id','x','y']]
             elif '.nc' in file:
-                data[i] = xr.open_dataset(self.opath / file)
+                data[i] = xr.open_dataset(self.opath / file, chunks = self['chunks'])
                 
         return data
             

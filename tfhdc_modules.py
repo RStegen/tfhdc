@@ -7,7 +7,7 @@ Created on Sun Nov 26 12:13:18 2023
 
 import module_basic
 
-def module(module_name = 'basic', **kwargs):
+def module(kwargs, module_name = 'basic'):
     if module_name == 'basic':
         return module_basic.Module(**kwargs)
     #elif ...
