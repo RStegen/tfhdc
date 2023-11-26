@@ -20,4 +20,4 @@ geo :
 chunks :
     x : 10000
     y : 10000
-    index : 50
+    index : 10

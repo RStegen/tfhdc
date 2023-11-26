@@ -34,6 +34,8 @@ class Module():
         
         res = self.rasterfiles[self.name + '_start'] * (1/2) ** (xrd / (self.cmd['decay']*1000))
         
+        self.rasterfiles[self.name + '_regions'] = res.groupby(self.rasterfiles.mask).sum('stacked_y_x').rename({'mask' : 'region'})
+        
         self.rasterfiles[self.name] = res.sum('index')
         
         
@@ -41,5 +43,5 @@ class Module():
         #return self.rasterfiles, self.features
         self.calc_distance_decay()
         
-        return self.rasterfiles
+        return self.rasterfiles, self.features
         

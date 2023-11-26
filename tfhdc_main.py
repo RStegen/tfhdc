@@ -6,8 +6,7 @@ Created on Thu Oct 26 22:30:48 2023
 """
 
 import sys
-from tfhdc_preprocessor import Preprocessor
+import tfhdc_main_script as tms
 
 if __name__ == '__main__':
-    p = Preprocessor(sys.argv[1])
-    p.run()
+    tms.run(sys.argv[1])
