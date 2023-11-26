@@ -74,7 +74,7 @@ class Preprocessor(dict):
         self['files']['regions_buffer'] = self['files'].get('regions_buffer', 'regions_buffer.json')
         self['files']['features'] = self['files'].get('features', 'features.json')
         self['files']['cmd'] = self['files'].get('cmd', 'cmd.json')
-        self['files']['regions_buffer_raster'] = self['files'].get('regions_buffer_raster', 'regions_buffer.tif')
+        self['files']['regions_raster'] = self['files'].get('regions_raster', 'regions_raster.tif')
         self['files']['rasterfiles'] = self['files'].get('rasterfiles', 'rasterfiles.nc')
 
     def prepare_geo_settings(self):
@@ -111,7 +111,7 @@ class Preprocessor(dict):
         self.load_region_shape()
         self.load_tags()
         self.transform_crs()
-        self.rasterize_region_buffer()
+        self.rasterize_regions()
         self.store_mask_to_netcdf()
         self.store_geojsons()
         self.create_hashes()
@@ -126,6 +126,7 @@ class Preprocessor(dict):
         Intended to be executed by the run() process.
         """
         self.region = geocode_to_gdf(self['region'])
+        self.region['region_nr'] = list(range(1, len(self.region) + 1))
         c = self.region.crs
         self.region_buffer = self.region.to_crs(self['geo'].get('crs', 32632)).buffer(self['geo'].get('buffer',0)).to_crs(c)
         
@@ -161,14 +162,16 @@ class Preprocessor(dict):
         self.region = self.region.to_crs(self['geo']['crs'])
         self.region_buffer = self.region_buffer.to_crs(self['geo']['crs'])
         self.features = self.features.to_crs(self['geo']['crs'])
+        self.features['x'] = self.features.geometry.x
+        self.features['y'] = self.features.geometry.y
     
-    def rasterize_region_buffer(self):
+    def rasterize_regions(self):
         """ 
-        Rasterize the region_buffer to create the masking raster.
+        Rasterize the region to create the masking raster.
         
         Intended to be executed by the run() process.
         """
-        bbox = self.region_buffer.total_bounds
+        bbox = self.region.total_bounds
         xmin, ymin, xmax, ymax = bbox
         res = self['geo']['resolution'] # resolution in m
         w = (xmax - xmin) // res
@@ -180,16 +183,18 @@ class Preprocessor(dict):
             "height": h,
             "width": w,
             "count": 1,
-            "crs": self.region_buffer.crs,
+            "crs": self.region.crs,
             "transform": transform.from_bounds(xmin, ymin, xmax, ymax, w, h),
             "compress": 'lzw'
         }
         
-        outfile = self['files']['outpath'] / self['files']['regions_buffer_raster']
+        outfile = self['files']['outpath'] / self['files']['regions_raster']
         with rasterio.open(outfile, 'w+', **out_meta) as out:
             out_arr = out.read(1)
-            rasterized = features.rasterize(self.region_buffer.geometry, fill = 0, out = out_arr, transform = out.transform)
+            shapes = ((geom,value) for geom, value in zip(self.region.geometry, self.region.region_nr))
+            rasterized = features.rasterize(shapes, fill = 0, out = out_arr, transform = out.transform)
             out.write_band(1, rasterized)
+            
             
     def store_mask_to_netcdf(self):
         """ 
@@ -198,7 +203,7 @@ class Preprocessor(dict):
         Intended to be executed by the run() process.
         """
         
-        maskfile = self['files']['outpath'] / self['files']['regions_buffer_raster']
+        maskfile = self['files']['outpath'] / self['files']['regions_raster']
         outfile = self['files']['outpath'] / self['files']['rasterfiles']
         with xr.open_dataset(maskfile) as ds:
             ds= ds.rename({'band_data' : 'mask'})
@@ -235,7 +240,7 @@ class Preprocessor(dict):
     
     def create_hashes(self):
         """ 
-        Create the hashed of relevant stored files, used in later processes.
+        Create the hashes of relevant stored files, used in later processes.
         
         regions_buffer, features and rasterfiles.
         Stores them as hexvalues in the dictionary.        
@@ -249,6 +254,10 @@ class Preprocessor(dict):
         with open(op / fd.get('regions_buffer'), 'rb') as f:
             h = hashlib.file_digest(f, 'sha256').hexdigest()
             self['hashes']['regions_buffer'] = h
+            
+        with open(op / fd.get('regions'), 'rb') as f:
+            h = hashlib.file_digest(f, 'sha256').hexdigest()
+            self['hashes']['regions'] = h
             
         with open(op / fd.get('features'), 'rb') as f:
             h = hashlib.file_digest(f, 'sha256').hexdigest()

@@ -1,6 +1,7 @@
 region :
     - Bremen, Germany
     - Hamburg, Deutschland
+#    - Niedersachsen, Germany
 tags :
     1 :
         key : power 
@@ -9,7 +10,7 @@ tags :
             key : "generator:source"
             value :
                 - wind
-        decay : 10
+        decay : 100
 geo :
     crs : 32632
     buffer : 5000
