@@ -6,7 +6,13 @@ Created on Thu Oct 26 22:30:48 2023
 """
 
 import sys
-import tfhdc_main_script as tms
+import tfhdc_main_run as tmr
 
 if __name__ == '__main__':
-    tms.run(sys.argv[1])
+    print(sys.argv)
+    file = sys.argv[1]
+    if len(sys.argv) > 2:
+        dask_ip = sys.argv[2]
+    else:
+        dask_ip = False
+    tmr.run(sys.argv[1], dask_ip = dask_ip)

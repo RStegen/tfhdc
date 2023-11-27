@@ -14,3 +14,6 @@ dask scheduler
 # prompt 2
 conda activate DemoProjekt
 dask worker <tcp> --nworkers <n>  # max 12 auf gpc
+
+# für Statusanzeige:
+Kopieren der Status-http Adresse aus Scheduler start und im Browser aufrufen

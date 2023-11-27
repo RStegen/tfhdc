@@ -1,7 +1,28 @@
 region :
-    - Bremen, Germany
-    - Hamburg, Deutschland
+    - "Landkreis Barnim, Deutschland"
+    - "Landkreis Dahme-Spreewald, Deutschland"
+    - "Landkreis Elbe-Elster, Deutschland"
+    - "Landkreis Havelland, Deutschland"
+    - "Landkreis Märkisch-Oderland, Deutschland"
+    - "Landkreis Oberhavel, Deutschland"
+    - "Landkreis Oberspreewald-Lausitz, Deutschland"
+    - "Landkreis Oder-Spree, Deutschland"
+    - "Landkreis Ostprignitz-Ruppin, Deutschland"
+    - "Landkreis Potsdam-Mittelmark, Deutschland"
+    - "Landkreis Prignitz, Deutschland"
+    - "Landkreis Spree-Neiße, Deutschland"
+    - "Landkreis Teltow-Fläming, Deutschland"
+    - "Landkreis Uckermark, Deutschland"
+    - "Brandenburg an der Havel, Deutschland"
+    - "Cottbus, Deutschland"
+    - "Frankfurt (Oder), Deutschland"
+    - "Potsdam, Deutschland"
+    
+    
+#    - Bremen, Germany
+#    - Hamburg, Deutschland
 #    - Niedersachsen, Germany
+    
 tags :
     1 :
         name : wind_basic
@@ -15,7 +36,7 @@ tags :
         decay : 2 # intensity loss/km
 geo :
     crs : 32632
-    buffer : 50000
+    buffer : 50 #000
     resolution : 100
 chunks :
     x : 10000
