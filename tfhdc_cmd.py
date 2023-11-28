@@ -2,7 +2,7 @@
 """
 Created on Fri Nov 24 15:36:03 2023
 
-@author: Anwender
+@author: Ronald Stegen
 """
 
 import json

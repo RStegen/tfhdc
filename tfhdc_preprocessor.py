@@ -2,7 +2,7 @@
 """
 Created on Thu Oct 26 20:02:52 2023
 
-@author: ronal
+@author: Ronald Stegen
 """
 
 

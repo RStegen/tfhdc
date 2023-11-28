@@ -2,7 +2,15 @@
 """
 Created on Thu Oct 26 22:30:48 2023
 
-@author: ronal
+@author: Ronald Stegen
+"""
+
+"""
+This is the main call for command line calls of the tfhdc.
+Currently takes 1-2 argument.
+1st: input command file (i.e. ./input.yml)
+2nd: ip of the dask scheduler. Optional but required if you want to parallelize. 
+
 """
 
 import sys
