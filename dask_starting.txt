@@ -6,13 +6,13 @@ Created on Sun Nov 26 14:23:45 2023
 """
 
 # prompt 1
-conda activate DemoProjekt
+conda activate <env-name>
 dask scheduler
 
 #copy tcp
 
 # prompt 2
-conda activate DemoProjekt
+conda activate <env-name>
 dask worker <tcp> --nworkers <n>  # max 12 auf gpc
 
 # für Statusanzeige:

@@ -35,10 +35,10 @@ tags :
         start : 1000 # starting intensity
         decay : 2 # intensity loss/km
 geo :
-    crs : 32632
-    buffer : 50 #000
-    resolution : 100
-chunks :
-    x : 10000
-    y : 10000
-    index : 10
+    crs : 32632 #EPSG number of the crs to use. Should be one measuring distance in meters. 32632 is standard for Germany
+    buffer : 50 #000 #buffer distance in meters to include additional soruce points
+    resolution : 500 #resolution of processing grid in meters
+chunks : # chunking of dask arrays
+    x : 100000 #X axis, least beneficial
+    y : 100000 #Y axis, to be prefered over X
+    index : 20 # index of the features dataframe/dataarray is the main chunker, the smaller the is the less memory required
