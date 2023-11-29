@@ -69,6 +69,11 @@ def run(infile, write_output = True, dask_ip = False, compute_results = False):
         } 
     print('starting module')
     module = tm.module(kwargs)
+    
+    
+    mid_time = time.time()
+
+    print('Preparation time: {} seconds'.format(mid_time - start_time))
     #return rasterfiles
     print('starting_module_run')
     result = module.process()
@@ -82,8 +87,9 @@ def run(infile, write_output = True, dask_ip = False, compute_results = False):
     if write_output:
         result.to_netcdf(Path(p['files']['outpath']) / p['files']['output_file'])
     end_time = time.time()
-
-    print('Run time: {} seconds'.format(end_time - start_time))
+    
+    print('Computing and saving time: {} seconds'.format(end_time - mid_time))
+    print('Total run un time: {} seconds'.format(end_time - start_time))
     
     return result # use this if you want to use it for other things.
 
